@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "/home/user/Office/kumud/backend/logs/.11c4b22281ebabaadefc0923704e50511e483e91-audit.json",
+    "files": [
+        {
+            "date": 1761730709589,
+            "name": "/home/user/Office/kumud/backend/logs/app-2025-10-29.log",
+            "hash": "c04f1d5f786844ac3a61e1d77398acaa1fbd1d161c3492fd86980f9e074c7e19"
+        }
+    ],
+    "hashType": "sha256"
+}
