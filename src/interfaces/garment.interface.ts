@@ -1,5 +1,3 @@
-import { Types } from "mongoose";
-
 export type Availability = "in stock" | "out of stock" | "pre-order";
 export interface Garment {       
   name: string;
