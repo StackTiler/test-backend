@@ -81,7 +81,7 @@ class AwareAuthApp {
   }
 
   public initializeApplication(): void {
-    this.server = this.expressApp.listen(this.PORT, () => {
+    this.server = this.expressApp.listen(this.PORT, '0.0.0.0', () => {
       console.log(`AwareAuthApp listening on port ${this.PORT}`);
     });
   }

@@ -38,32 +38,34 @@ export class GarmentsController {
     }
   };
 
-  public updateGarment = async (
-    req: Request<{ id: string }, {}, Partial<Garment> >,
-    res: Response,
-    next: NextFunction
-  ) => {
-    try {
-      const { id } = req.params;
-      const files = (req.files as Express.Multer.File[]) || [];
-      const filePaths = files.map((file) => file.path);
+public updateGarment = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const { id } = req.params;
+    const files = (req.files as Express.Multer.File[]) || [];
+    const newFilePaths = files.map((file) => file.path);
 
-      const garmentData = {
-        ...req.body,
-        ...(filePaths.length > 0 && { images: filePaths }),
-      };
+    const { existingImages, ...body } = req.body;
+    const existingImagesParsed = existingImages ? JSON.parse(existingImages) : [];
 
-      const response = await this.garmentsService.updateGarment(id, garmentData);
-      if (!response.success) {
-        return next(new ErrorHandler(response.message, response.statusCode));
-      }
+    const allImages = [...existingImagesParsed, ...newFilePaths];
+    const garmentData = { ...body, images: allImages };
 
-      res.status(response.statusCode).json(response);
-    } catch (error) {
-      console.error("Error in updateGarment controller:", error);
-      return next(new ErrorHandler("Failed to update garment", 500));
+    const response = await this.garmentsService.updateGarment(id, garmentData);
+
+    if (!response.success) {
+      return next(new ErrorHandler(response.message, response.statusCode));
     }
-  };
+
+    res.status(response.statusCode).json(response);
+  } catch (error) {
+    console.error("Error in updateGarment controller:", error);
+    return next(new ErrorHandler("Failed to update garment", 500));
+  }
+};
 
   public async deleteGarment(
     req: Request<{ id: string }>,

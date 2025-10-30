@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 14
+    },
+    "auditLog": "C:\\Users\\Suraj\\Documents\\kumud\\new\\test-backend\\logs\\.1128940ac26dcd2162f070ebaecd817f5a5ead94-audit.json",
+    "files": [
+        {
+            "date": 1761838197252,
+            "name": "C:\\Users\\Suraj\\Documents\\kumud\\new\\test-backend\\logs\\app-2025-10-30.log",
+            "hash": "72ee4fd1e07e80fd1b9d23d2bde0888b053cd9a69ff8e8d4aec412b0da201a48"
+        }
+    ],
+    "hashType": "sha256"
+}

@@ -33,7 +33,7 @@ class GarmentsRoutes {
     garmentsRoutes.patch(
       "/garments/:id",
       uploader.array("files", 4),
-      validate(updateGarmentSchema),
+      // validate(updateGarmentSchema),
       this.garmentsController.updateGarment
     );
 
