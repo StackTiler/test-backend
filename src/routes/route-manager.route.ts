@@ -1,4 +1,4 @@
-import { Application, NextFunction, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import { errorMiddleware } from "../middlewares/error.middleware";
 import GarmentsRoutes from "./v1/garments.routes";
 
@@ -18,6 +18,8 @@ class RouteManager {
     }
 
     public intiRouteManager(app: Application){
+        app.use("/uploads", express.static("uploads"));
+        
         app.get('/health', (req: Request,res: Response, _next: NextFunction)=>{
             res.status(200).set({
                 "Content-Type": "application/json",
@@ -29,7 +31,6 @@ class RouteManager {
         })
 
         this.garmentsRoutes.garmentsRoutesInit(app)
-
         app.use(errorMiddleware)
     }
 }
