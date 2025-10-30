@@ -1,7 +1,8 @@
+import { Server } from "http";
 import express, { Application } from "express";
+import cors from "cors"
 import envConfig from "./config/env.config";
 import RouteManager from "./routes/route-manager.route";
-import { Server } from "http";
 import { MongooseConnection } from "./config/database.connection";
 
 class AwareAuthApp {
@@ -29,6 +30,7 @@ class AwareAuthApp {
   }
 
   private configureApp(): void {
+    this.expressApp.use(cors())
     this.expressApp.use(express.json());
     this.expressApp.use(express.urlencoded({ extended: true }));
 

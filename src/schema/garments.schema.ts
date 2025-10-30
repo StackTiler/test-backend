@@ -12,7 +12,7 @@ export const createGarmentSchema = z.object({
       availability: z.enum(AVAILABILITY).default("in stock"),
       vendor: z.string().min(1).max(120).trim().toLowerCase(),
       categories: z.string().min(1).max(120).trim().toLowerCase(),
-      tags: z.array(z.string()).default([]),
+      tags: z.array(z.string()).default(["N/A"]),
     }),
   }),
 });

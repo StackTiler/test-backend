@@ -4,6 +4,8 @@ import { ErrorHandler } from "../utils/error-handler.utills";
 
 export const validate = (schema: ZodObject) => {
   return async (req: Request, res: Response, next: NextFunction) => {
+
+    console.log({body:req.body, params:req.params})
     try {
       await schema.parseAsync({
         body: req.body,

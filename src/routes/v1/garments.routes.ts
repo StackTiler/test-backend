@@ -30,7 +30,7 @@ class GarmentsRoutes {
     );
 
     // Update garment
-    garmentsRoutes.put(
+    garmentsRoutes.patch(
       "/garments/:id",
       validate(updateGarmentSchema),
       this.garmentsController.updateGarment
@@ -50,6 +50,13 @@ class GarmentsRoutes {
       this.garmentsController.getGarmentById
     );
 
+    // Search garments by name with pagination
+    garmentsRoutes.get(
+      "/garments/search/name",
+      validate(searchGarmentsSchema),
+      this.garmentsController.searchGarmentsByName
+    );
+
     // Get all garments with pagination
     garmentsRoutes.get(
       "/garments",
@@ -57,12 +64,6 @@ class GarmentsRoutes {
       this.garmentsController.getAllGarments
     );
 
-    // Search garments by name with pagination
-    garmentsRoutes.get(
-      "/garments/search/name",
-      validate(searchGarmentsSchema),
-      this.garmentsController.searchGarmentsByName
-    );
 
     app.use("/v1", garmentsRoutes);
   }
