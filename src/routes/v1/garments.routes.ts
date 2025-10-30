@@ -26,7 +26,7 @@ class GarmentsRoutes {
     garmentsRoutes.post(
       "/garments",
       uploader.array("files", 4),
-      validate(createGarmentSchema),
+      // validate(createGarmentSchema),
       this.garmentsController.addGarment
     );
 

@@ -58,6 +58,14 @@ export const ProductSchema = new Schema<IGarmentSchema>(
         message: "All tags must be strings",
       },
     },
+    images: {
+      type: [String],
+      default: [],
+      validate: {
+        validator: (arr: unknown[]) => Array.isArray(arr) && arr.every((t) => typeof t === "string"),
+        message: "All tags must be strings",
+      },
+    },
   },
   {
     timestamps: true,

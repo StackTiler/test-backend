@@ -20,9 +20,10 @@ export class GarmentsController {
       const filePaths = files.map((file) => file.path);
 
       const garmentData = {
-        ...req.body.garment,
+        ...req.body,
         images: filePaths,
       };
+      console.log({garmentData})
 
       const response = await this.garmentsService.addGarments(garmentData);
       

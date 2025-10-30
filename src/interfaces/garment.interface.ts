@@ -7,7 +7,8 @@ export interface Garment {
   availability: Availability;
   vendor: string;
   categories: string;
+  images: string[];
   tags: string[];
   createdAt: Date;             
-  updatedAt: Date;  
+  updatedAt: Date;
 }
