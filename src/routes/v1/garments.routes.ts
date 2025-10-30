@@ -10,6 +10,7 @@ import {
   getAllGarmentsSchema,
   searchGarmentsSchema,
 } from "../../schema/garments.schema";
+import { uploader } from "../../middlewares/multer.middleware";
 
 class GarmentsRoutes {
   private garmentsController: GarmentsController;
@@ -22,42 +23,38 @@ class GarmentsRoutes {
   public garmentsRoutesInit(app: Application) {
     const garmentsRoutes: Router = express.Router();
 
-    // Create garment
     garmentsRoutes.post(
       "/garments",
+      uploader.array("files", 4),
       validate(createGarmentSchema),
       this.garmentsController.addGarment
     );
 
-    // Update garment
     garmentsRoutes.patch(
       "/garments/:id",
+      uploader.array("files", 4),
       validate(updateGarmentSchema),
       this.garmentsController.updateGarment
     );
 
-    // Delete garment
     garmentsRoutes.delete(
       "/garments/:id",
       validate(deleteGarmentSchema),
       this.garmentsController.deleteGarment
     );
 
-    // Get garment by ID
     garmentsRoutes.get(
       "/garments/:id",
       validate(getGarmentByIdSchema),
       this.garmentsController.getGarmentById
     );
 
-    // Search garments by name with pagination
     garmentsRoutes.get(
       "/garments/search/name",
       validate(searchGarmentsSchema),
       this.garmentsController.searchGarmentsByName
     );
 
-    // Get all garments with pagination
     garmentsRoutes.get(
       "/garments",
       validate(getAllGarmentsSchema),

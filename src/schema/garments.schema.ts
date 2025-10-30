@@ -4,7 +4,6 @@ const AVAILABILITY = ["in stock", "out of stock", "pre-order"] as const;
 
 export const createGarmentSchema = z.object({
   body: z.object({
-    garment: z.object({
       name: z.string().min(2).max(200).trim(),
       description: z.string().min(1).max(5000).trim(),
       price: z.number().positive().min(0),
@@ -13,8 +12,10 @@ export const createGarmentSchema = z.object({
       vendor: z.string().min(1).max(120).trim().toLowerCase(),
       categories: z.string().min(1).max(120).trim().toLowerCase(),
       tags: z.array(z.string()).default(["N/A"]),
-    }),
   }),
+
+  files: z.array(z.any()).optional(),
+
 });
 
 export const updateGarmentSchema = z.object({
@@ -22,7 +23,6 @@ export const updateGarmentSchema = z.object({
     id: z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid MongoDB ObjectId"),
   }),
   body: z.object({
-    garment: z.object({
       name: z.string().min(2).max(200).trim().optional(),
       description: z.string().min(1).max(5000).trim().optional(),
       price: z.number().positive().min(0).optional(),
@@ -31,8 +31,10 @@ export const updateGarmentSchema = z.object({
       vendor: z.string().min(1).max(120).trim().toLowerCase().optional(),
       categories: z.string().min(1).max(120).trim().toLowerCase().optional(),
       tags: z.array(z.string()).optional(),
-    }),
   }),
+
+  files: z.array(z.any()).optional(),
+
 });
 
 export const deleteGarmentSchema = z.object({

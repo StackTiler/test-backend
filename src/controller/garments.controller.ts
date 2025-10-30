@@ -10,44 +10,59 @@ export class GarmentsController {
     this.garmentsService = new GarmentsService();
   }
 
-  public async addGarment(
-    req: Request<{}, {}, { garment: Garment }>,
+  public addGarment = async (
+    req: Request,
     res: Response,
     next: NextFunction
-  ) {
+  ) => {
     try {
-      const response = await this.garmentsService.addGarments(
-        req.body.garment
-      );
-      if (!response.success)
+      const files = (req.files as Express.Multer.File[]) || [];
+      const filePaths = files.map((file) => file.path);
+
+      const garmentData = {
+        ...req.body.garment,
+        images: filePaths,
+      };
+
+      const response = await this.garmentsService.addGarments(garmentData);
+      
+      if (!response.success) {
         return next(new ErrorHandler(response.message, response.statusCode));
+      }
 
       res.status(response.statusCode).json(response);
     } catch (error) {
       console.error("Error in addGarment controller:", error);
       return next(new ErrorHandler("Failed to add garment", 500));
     }
-  }
+  };
 
-  public async updateGarment(
-    req: Request<{ id: string }, {}, { garment: Partial<Garment> }>,
+  public updateGarment = async (
+    req: Request<{ id: string }, {}, Partial<Garment> >,
     res: Response,
     next: NextFunction
-  ) {
+  ) => {
     try {
-      const response = await this.garmentsService.updateGarment(
-        req.params.id,
-        req.body.garment
-      );
-      if (!response.success)
+      const { id } = req.params;
+      const files = (req.files as Express.Multer.File[]) || [];
+      const filePaths = files.map((file) => file.path);
+
+      const garmentData = {
+        ...req.body,
+        ...(filePaths.length > 0 && { images: filePaths }),
+      };
+
+      const response = await this.garmentsService.updateGarment(id, garmentData);
+      if (!response.success) {
         return next(new ErrorHandler(response.message, response.statusCode));
+      }
 
       res.status(response.statusCode).json(response);
     } catch (error) {
       console.error("Error in updateGarment controller:", error);
       return next(new ErrorHandler("Failed to update garment", 500));
     }
-  }
+  };
 
   public async deleteGarment(
     req: Request<{ id: string }>,

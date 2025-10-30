@@ -23,6 +23,7 @@
     "express": "^5.1.0",
     "logger-utility-srj": "^1.0.2",
     "mongoose": "^8.14.3",
+    "multer-utility": "^1.0.3",
     "response-messages": "^1.0.3",
     "zod": "^4.1.12"
   },
@@ -30,6 +31,7 @@
     "@eslint/js": "^9.38.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.4",
+    "@types/multer": "^2.0.0",
     "@types/node": "^24.9.1",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",

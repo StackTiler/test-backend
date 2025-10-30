@@ -12,11 +12,11 @@
     "moduleResolution": "node",                 
     "resolveJsonModule": true,                 
     "skipLibCheck": true,                      
-    "types": ["node"],                          
+    "types": ["node", "express", "multer"],                          
     "allowSyntheticDefaultImports": true,
     "typeRoots": ["./node_modules/@types", "src/interfaces"]
   },
-  "include": ["src"],
+  "include": [ "src/**/*" ],
   "exclude": ["node_modules", "dist"]
 }
 
