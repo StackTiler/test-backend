@@ -19,7 +19,7 @@ export class QRCodeService {
     try {
       await this.initQRDirectory();
 
-      const productUrl = `${this.BASE_URL}/kumud/admin/details?id=${garmentId}`;
+      const productUrl = `${this.BASE_URL}/?id=${garmentId}`;
       const qrFilePath = path.join(this.QR_DIR, `${garmentId}.png`);
 
       // Generate QR code with valid options only
@@ -43,7 +43,7 @@ export class QRCodeService {
 
   static async generateQRCodeBase64(garmentId: string): Promise<string> {
     try {
-      const productUrl = `${this.BASE_URL}/kumud/admin/details?id=${garmentId}`;
+      const productUrl = `${this.BASE_URL}/?id=${garmentId}`;
 
       const qrCodeDataURL = await QRCode.toDataURL(productUrl, {
         errorCorrectionLevel: 'H',

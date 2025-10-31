@@ -94,6 +94,7 @@ class AwareAuthApp {
     return [
       "http://192.168.29.78:8000",
       "http://192.168.27.78:8000",
+      "http://192.168.1.65:8000",
       "http://localhost:8000",
       "http://127.0.0.1:8000",
       "http://localhost:3000",

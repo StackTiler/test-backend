@@ -16,12 +16,13 @@ export class AuthController {
 
   public async register(req: Request, res: Response, next: NextFunction) {
     try {
-      const { username, email, password } = req.body;
-
+      const { username, email, password, role } = req.body;
+      
       const response = await this.authService.userRegister({
         username,
         email,
         password,
+        role,
       });
 
       if (!response.success) {

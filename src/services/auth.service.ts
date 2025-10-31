@@ -11,6 +11,7 @@ interface RegisterInfo {
   username: string;
   email: string;
   password: string;
+  role:string
 }
 
 export class AuthService {
@@ -23,15 +24,15 @@ export class AuthService {
  
   public async userRegister(payload: RegisterInfo) {
     try {
-      const userExists = await this.authRepository.existsByEmail(payload.email);
+      const userExists = await this.authRepository.findOne({email:payload.email});
       if (userExists) {
         return ResponseMessage.conflict("User already exists with this email");
       }
-
       const newUser = await this.authRepository.create({
         username: payload.username,
         email: payload.email,
         password: payload.password,
+        role: payload.role as "admin" | "moderetor" | "user"
       });
 
       return ResponseMessage.created("User registered successfully");
@@ -48,7 +49,7 @@ export class AuthService {
       );
 
       if (!existingUser) return ResponseMessage.notFound("User not found");
-
+      
       const isPasswordMatch = await existingUser.comparePassword(payload.password);
       if (!isPasswordMatch) return ResponseMessage.badRequest("Invalid credentials");
 
