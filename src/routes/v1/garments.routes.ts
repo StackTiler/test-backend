@@ -11,6 +11,7 @@ import {
   searchGarmentsSchema,
 } from "../../schema/garments.schema";
 import { uploader } from "../../middlewares/multer.middleware";
+import { authMiddleware } from "../../middlewares/auth.middleware";
 
 class GarmentsRoutes {
   private garmentsController: GarmentsController;
@@ -18,6 +19,7 @@ class GarmentsRoutes {
   constructor() {
     this.garmentsController = new GarmentsController();
     ThisContextBinder.bindControllerMethods(this.garmentsController);
+
   }
 
   public garmentsRoutesInit(app: Application) {
@@ -25,6 +27,7 @@ class GarmentsRoutes {
 
     garmentsRoutes.post(
       "/garments",
+      authMiddleware,
       uploader.array("files", 4),
       // validate(createGarmentSchema),
       this.garmentsController.addGarment
@@ -32,6 +35,7 @@ class GarmentsRoutes {
 
     garmentsRoutes.patch(
       "/garments/:id",
+      authMiddleware,
       uploader.array("files", 4),
       // validate(updateGarmentSchema),
       this.garmentsController.updateGarment
@@ -39,6 +43,7 @@ class GarmentsRoutes {
 
     garmentsRoutes.delete(
       "/garments/:id",
+      authMiddleware,
       validate(deleteGarmentSchema),
       this.garmentsController.deleteGarment
     );
@@ -51,16 +56,23 @@ class GarmentsRoutes {
 
     garmentsRoutes.get(
       "/garments/search/name",
+      authMiddleware,
       validate(searchGarmentsSchema),
       this.garmentsController.searchGarmentsByName
     );
 
     garmentsRoutes.get(
       "/garments",
+      authMiddleware,
       validate(getAllGarmentsSchema),
       this.garmentsController.getAllGarments
     );
 
+    garmentsRoutes.get(
+      "/garment/qr/:id",
+      authMiddleware,
+      this.garmentsController.generateProductQR
+    )
 
     app.use("/v1", garmentsRoutes);
   }

@@ -2,6 +2,7 @@ import { ResponseMessage } from "response-messages";
 import { Garment } from "../interfaces/garment.interface";
 import { GarmentRepository } from "../repositories/garments.repository";
 import { Types } from "mongoose";
+import { QRCodeService } from "./qr.service";
 
 export class GarmentsService {
   private garmentsRepository: GarmentRepository;
@@ -56,7 +57,7 @@ export class GarmentsService {
     });
   }
 
-  public async getGarmentById(id: string) {
+  public async getGarmentById(id: Types.ObjectId) {
     if (!Types.ObjectId.isValid(id)) {
       return ResponseMessage.badRequest("Invalid garment ID");
     }
@@ -125,5 +126,16 @@ export class GarmentsService {
         prevPage: result.prevPage,
       },
     });
+  }
+
+
+  public async genrateQrCodeSerivce(garmentId: Types.ObjectId){
+    const garment = this.garmentsRepository.findById(garmentId);
+    if(!garment) return ResponseMessage.badRequest("garment not found");
+
+    const qrCodeBase64 = await QRCodeService.generateQRCodeBase64(garmentId.toString());
+    if(!qrCodeBase64) return ResponseMessage.internalServerError("failed to genereate qr code");
+
+    return ResponseMessage.created("qr code generated", {qrCodeBase64})
   }
 }

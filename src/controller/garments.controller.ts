@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { GarmentsService } from "../services/garments.service";
-import { Garment } from "../interfaces/garment.interface";
 import { ErrorHandler } from "../utils/error-handler.utills";
+import { Types } from "mongoose";
 
 export class GarmentsController {
   private garmentsService: GarmentsService;
@@ -90,8 +90,11 @@ public updateGarment = async (
     next: NextFunction
   ) {
     try {
+
+      
+
       const response = await this.garmentsService.getGarmentById(
-        req.params.id
+        new Types.ObjectId(req.params.id)
       );
       if (!response.success)
         return next(new ErrorHandler(response.message, response.statusCode));
@@ -145,6 +148,24 @@ public updateGarment = async (
     } catch (error) {
       console.error("Error in searchGarmentsByName controller:", error);
       return next(new ErrorHandler("Failed to search garments", 500));
+    }
+  }
+
+  async generateProductQR(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { id } = req.params;
+      if(!id) return next(new ErrorHandler("id is missing", 404));
+
+      const response = await this.garmentsService.genrateQrCodeSerivce(new Types.ObjectId(id));
+      if(!response.success) return next(new ErrorHandler(response.message, response.statusCode));
+
+      res.status(response.statusCode).json(response)
+    } catch (error) {
+      next(error);
     }
   }
 }

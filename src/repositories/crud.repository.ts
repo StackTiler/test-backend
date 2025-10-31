@@ -29,11 +29,15 @@ export class CrudRepository<T extends Document> {
 
   async findOne(
     filter: Record<string, any> = {},
-    options?: { sort?: Record<string, 1 | -1> }
+    options?: { sort?: Record<string, 1 | -1>, select: string }
   ): Promise<T | null> {
     let query = this.model.findOne(filter);
     if (options?.sort) {
       query = query.sort(options.sort);
+    }
+
+    if(options?.select){
+      query= query.select(options.select)
     }
     return await query.exec();
   }

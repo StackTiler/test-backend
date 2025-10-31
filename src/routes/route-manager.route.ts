@@ -1,14 +1,17 @@
 import express, { Application, NextFunction, Request, Response } from "express";
 import { errorMiddleware } from "../middlewares/error.middleware";
 import GarmentsRoutes from "./v1/garments.routes";
+import AuthRoutes from "./v1/auth.routes";
 
 class RouteManager {
-    private static instance:RouteManager;
+    private static instance: RouteManager;
     private garmentsRoutes: GarmentsRoutes;
-    
+    private authRoutes: AuthRoutes;
+
     private constructor() {
-        this.garmentsRoutes= new GarmentsRoutes()
-    };
+        this.authRoutes = new AuthRoutes();
+        this.garmentsRoutes = new GarmentsRoutes();
+    }
 
     public static getInstance(): RouteManager {
         if (!RouteManager.instance) {
@@ -17,22 +20,26 @@ class RouteManager {
         return RouteManager.instance;
     }
 
-    public intiRouteManager(app: Application){
+    public intiRouteManager(app: Application) {
         app.use("/uploads", express.static("uploads"));
-        
-        app.get('/health', (req: Request,res: Response, _next: NextFunction)=>{
-            res.status(200).set({
-                "Content-Type": "application/json",
-                "X-Service": "aware-auth-service"
-            }).json({
-                success: true,
-                message: 'Every thing is healthy and up and runnig'
-            })
-        })
 
-        this.garmentsRoutes.garmentsRoutesInit(app)
-        app.use(errorMiddleware)
+        app.get("/health", (req: Request, res: Response, _next: NextFunction) => {
+            res.status(200)
+                .set({
+                    "Content-Type": "application/json",
+                    "X-Service": "aware-auth-service",
+                })
+                .json({
+                    success: true,
+                    message: "Everything is healthy and up and running",
+                });
+        });
+
+        this.authRoutes.authRoutesInit(app);
+        this.garmentsRoutes.garmentsRoutesInit(app);
+
+        app.use(errorMiddleware);
     }
 }
 
-export default RouteManager
+export default RouteManager;
