@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { AuthService } from "../services/auth.service";
 import { ErrorHandler } from "../utils/error-handler.utills";
+import ENV from "../config/env.config";
 
 interface RequestWithUser extends Request {
   user?: { id: string };
 }
+
+
 
 export class AuthController {
   private authService: AuthService;
@@ -48,12 +51,13 @@ export class AuthController {
 
       res.cookie("refreshToken", response.data.refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
+        secure: ENV.NODE_ENV === "production",
+        sameSite: this.sameSiteOption(),
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        path: "/"
       });
 
-      
+
       res.status(response.statusCode).json({
         success: response.success,
         message: response.message,
@@ -86,9 +90,10 @@ export class AuthController {
 
       res.cookie("refreshToken", response.data.refreshToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        secure: ENV.NODE_ENV === "production",
+        sameSite: this.sameSiteOption(),
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        path: "/"
       });
 
     
@@ -142,5 +147,16 @@ export class AuthController {
     } catch (error) {
       next(error);
     }
+  }
+
+
+  private sameSiteOption(){
+    const sameSiteEnv = ENV.SAME_SITE;
+    const sameSiteOption =
+      sameSiteEnv === "lax" || sameSiteEnv === "strict" || sameSiteEnv === "none"
+        ? sameSiteEnv
+        : "lax";
+    
+    return sameSiteOption
   }
 }

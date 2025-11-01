@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { ErrorHandler } from "../utils/error-handler.utills";
 import { LoggerUtil } from "logger-utility-srj";
+import ENV from "../config/env.config";
 
 export const errorMiddleware = (
   err: ErrorHandler | Error,
@@ -26,6 +27,6 @@ export const errorMiddleware = (
   res.status(statusCode).json({
     success: false,
     message,
-    ...(process.env.NODE_ENV !== "production" && { stack: err.stack }),
+    ...(ENV.NODE_ENV !== "production" && { stack: err.stack }),
   });
 };

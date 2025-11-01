@@ -21,7 +21,7 @@ class RouteManager {
     }
 
     public intiRouteManager(app: Application) {
-        app.use("/uploads", express.static("uploads"));
+        app.use("/v1/uploads", express.static("uploads"));
 
         app.get("/health", (req: Request, res: Response, _next: NextFunction) => {
             res.status(200)

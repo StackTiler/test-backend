@@ -1,6 +1,7 @@
 import { Server } from "http";
 import express, { Application, Request, Response, NextFunction } from "express";
 import cors, { CorsOptions } from "cors";
+import cookieParser from "cookie-parser"
 import envConfig from "./config/env.config";
 import RouteManager from "./routes/route-manager.route";
 import { MongooseConnection } from "./config/database.connection";
@@ -34,7 +35,7 @@ class AwareAuthApp {
 
     this.expressApp.use(express.json({ limit: "50mb" }));
     this.expressApp.use(express.urlencoded({ limit: "50mb", extended: true }));
-
+    this.expressApp.use(cookieParser())
     this.expressApp.use((req: Request, res: Response, next: NextFunction) => {
       res.setHeader("X-Content-Type-Options", "nosniff");
       res.setHeader("X-Frame-Options", "DENY");
@@ -95,6 +96,8 @@ class AwareAuthApp {
       "http://192.168.29.78:8000",
       "http://192.168.27.78:8000",
       "http://192.168.1.65:8000",
+      "http://192.168.0.104:8000",
+      "https://theurgic-gullibly-clarinda.ngrok-free.dev",
       "http://localhost:8000",
       "http://127.0.0.1:8000",
       "http://localhost:3000",
@@ -151,7 +154,7 @@ class AwareAuthApp {
       console.log(`
 Kumud Started Successfully
 Server:      http://localhost:${this.PORT}
-Environment: ${process.env.NODE_ENV || "development"}
+Environment: ${envConfig.NODE_ENV || "development"}
 Database:    ${envConfig.DB_URL ? "Connected" : "Pending"}
 
 CORS Allowed Origins:
