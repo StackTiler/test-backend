@@ -63,7 +63,7 @@ class AwareAuthApp {
     const allowedOrigins = this.getAllowedOrigins();
 
     const corsOptions: CorsOptions = {
-      origin: (origin, callback) => {
+      origin: (origin:any, callback:any) => {
         if (!origin) {
           return callback(null, true);
         }
@@ -92,17 +92,18 @@ class AwareAuthApp {
   }
 
   private getAllowedOrigins(): string[] {
-    return [
-      "http://192.168.29.78:8000",
-      "http://192.168.27.78:8000",
-      "http://192.168.1.65:8000",
-      "http://192.168.0.104:8000",
-      "https://theurgic-gullibly-clarinda.ngrok-free.dev",
+    const defaultOrigins = [
       "http://localhost:8000",
       "http://127.0.0.1:8000",
       "http://localhost:3000",
       "http://127.0.0.1:3000",
     ];
+
+    const extra = process.env.ALLOWED_ORIGINS
+      ? process.env.ALLOWED_ORIGINS.split(",")
+      : [];
+
+    return [...defaultOrigins, ...extra];
   }
 
   private handleProcessEvents(): void {

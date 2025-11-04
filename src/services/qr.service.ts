@@ -1,10 +1,11 @@
 import QRCode from 'qrcode';
 import { promises as fs } from 'fs';
 import path from 'path';
+import ENV from '../config/env.config';
 
 export class QRCodeService {
   private static readonly QR_DIR = path.join(__dirname, '../../generated-qr');
-  private static readonly BASE_URL = process.env.FRONTEND_URL || 'http://192.168.29.78:5173';
+  private static readonly BASE_URL = ENV.FRONTEND_URL || 'http://192.168.29.78:5173';
 
   static async initQRDirectory(): Promise<void> {
     try {
