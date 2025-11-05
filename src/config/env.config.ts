@@ -25,12 +25,12 @@ const getSecret = (secretName: string): string | undefined => {
 const envSchema = z.object({
   PORT: z.coerce.number().min(1).default(3000),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  FRONTEND_URL: z.string().url().default("http://localhost:5173"),
+  FRONTEND_URL: z.string().url().default("http://localhost:8001"),
   DB_URL: z.string().min(10),
   SAME_SITE: z.enum(['none', 'lax', 'strict']).default('lax'),
   COOKIE_SECRET: z.string().min(32).optional(),
-  JWT_ACCESS_SECRET: z.string().min(32),
-  JWT_REFRESH_SECRET: z.string().min(32),
+  JWT_ACCESS_SECRET: z.string(),
+  JWT_REFRESH_SECRET: z.string(),
   JWT_ACCESS_EXPIRES_IN: z.string().default('15m'),
   JWT_REFRESH_EXPIRES_IN: z.string().default('7d'),
 });

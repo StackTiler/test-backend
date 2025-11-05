@@ -34,6 +34,11 @@
             "date": 1762229360401,
             "name": "/home/user/Office/kumud/backend/logs/app-2025-11-04.log",
             "hash": "b52b53b649f6d52c97c81133714dc878f8657cc6c5879c074c9e5e6938609f91"
+        },
+        {
+            "date": 1762317109143,
+            "name": "/home/user/Office/kumud/backend/logs/app-2025-11-05.log",
+            "hash": "65a7a8960e141cc6a0ab1a2a7827417ad84fcd1bf8c6cbf28e7d781c05a8b3ff"
         }
     ],
     "hashType": "sha256"

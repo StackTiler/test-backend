@@ -1,3 +1,49 @@
+/**
+ * ============================================================================
+ * Generic CRUD Repository Base Class
+ * ============================================================================
+ *
+ * WORKFLOW OVERVIEW:
+ * Provides reusable database operations for any MongoDB model.
+ * Implements Repository pattern for clean data access abstraction.
+ *
+ * CORE OPERATIONS:
+ *
+ * 1. CREATE:
+ *    - create(data) → Insert new document, return saved document
+ *
+ * 2. READ:
+ *    - findById(id) → Get single document by ID
+ *    - findOne(filter, options) → Get first matching document with sort/select
+ *    - findAll(filter) → Get all matching documents
+ *    - findSelect(filter, select) → Get documents with field selection (lean)
+ *    - findWithPagination(filter, page, limit) → Paginated results with metadata
+ *    - searchWithPagination(field, value, page, limit) → Text search with pagination
+ *
+ * 3. UPDATE:
+ *    - updateById(id, data) → Update document, run validators, return updated
+ *
+ * 4. DELETE:
+ *    - deleteById(id) → Delete single document by ID
+ *    - deleteOne(filter) → Delete first matching document
+ *    - deleteMany(filter) → Delete all matching documents
+ *
+ * PAGINATION RESULT:
+ * Returns metadata for frontend pagination UI:
+ * - docs: Array of documents
+ * - totalDocs: Total document count
+ * - totalPages: Calculated total pages
+ * - currentPage: Current page number
+ * - hasNextPage/hasPrevPage: Boolean flags
+ * - nextPage/prevPage: Next/previous page numbers or null
+ *
+ * SEARCH IMPLEMENTATION:
+ * Uses regex with 'i' flag for case-insensitive substring matching
+ * Alternative: Use text indexes for full-text search performance
+ *
+ * ============================================================================
+ */
+
 import { Model, Document, Types, DeleteResult } from "mongoose";
 
 export interface PaginationResult<T> {
@@ -29,16 +75,18 @@ export class CrudRepository<T extends Document> {
 
   async findOne(
     filter: Record<string, any> = {},
-    options?: { sort?: Record<string, 1 | -1>, select: string }
+    options?: { sort?: Record<string, any>; select: string }
   ): Promise<T | null> {
     let query = this.model.findOne(filter);
+
     if (options?.sort) {
       query = query.sort(options.sort);
     }
 
-    if(options?.select){
-      query= query.select(options.select)
+    if (options?.select) {
+      query = query.select(options.select);
     }
+
     return await query.exec();
   }
 
@@ -47,9 +95,11 @@ export class CrudRepository<T extends Document> {
     select?: string | string[]
   ): Promise<any> {
     let query = this.model.find(filter).lean();
+
     if (select) {
       query = query.select(select);
     }
+
     return await query.exec();
   }
 
@@ -94,6 +144,7 @@ export class CrudRepository<T extends Document> {
     const filter = {
       [searchField]: { $regex: searchValue, $options: "i" },
     };
+
     return this.findWithPagination(filter, page, limit);
   }
 

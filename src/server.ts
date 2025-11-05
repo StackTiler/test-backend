@@ -1,6 +1,6 @@
-import AwareAuthApp from "./app";
+import KumudMangement from "./app";
 
 (() => {
-    const app = new AwareAuthApp();
+    const app = new KumudMangement();
     app.initializeApplication();
 })();

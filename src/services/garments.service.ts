@@ -1,3 +1,58 @@
+/**
+ * ============================================================================
+ * Garments Business Logic Service
+ * ============================================================================
+ *
+ * WORKFLOW OVERVIEW:
+ * Core business logic for garment operations.
+ * Orchestrates repository access and business rule enforcement.
+ *
+ * COMPLETE GARMENT LIFECYCLE:
+ *
+ * 1. ADD GARMENT:
+ *    - Receive garment data + file paths from controller
+ *    - Call repository.create()
+ *    - Return success with saved garment
+ *
+ * 2. UPDATE GARMENT:
+ *    - Validate ID format (MongoDB ObjectId)
+ *    - Merge existing images with new images
+ *    - Call repository.updateById()
+ *    - Return updated garment or not found error
+ *
+ * 3. DELETE GARMENT:
+ *    - Validate ID format
+ *    - Call repository.deleteById()
+ *    - Return success or not found error
+ *
+ * 4. GET GARMENT BY ID:
+ *    - Validate ID format
+ *    - Call repository.findById()
+ *    - Return garment details
+ *
+ * 5. GET ALL GARMENTS (PAGINATED):
+ *    - Validate pagination parameters
+ *    - Call repository.findWithPagination()
+ *    - Return garments + pagination metadata
+ *
+ * 6. SEARCH GARMENTS:
+ *    - Validate pagination parameters
+ *    - Call repository.searchWithPagination('name', searchTerm)
+ *    - Return matching garments + search metadata
+ *
+ * 7. GENERATE QR CODE:
+ *    - Find garment by ID
+ *    - Call QRCodeService.generateQRCodeBase64()
+ *    - Return Base64 encoded QR code
+ *
+ * ERROR HANDLING:
+ * - All operations validated before database access
+ * - Graceful error messages returned via ResponseMessage
+ * - HTTP status codes reflect operation result
+ *
+ * ============================================================================
+ */
+
 import { ResponseMessage } from "response-messages";
 import { Garment } from "../interfaces/garment.interface";
 import { GarmentRepository } from "../repositories/garments.repository";
@@ -13,6 +68,7 @@ export class GarmentsService {
 
   public async addGarments(garment: Omit<Garment, "createdAt" | "updatedAt">) {
     const garmentAdded = await this.garmentsRepository.create(garment);
+
     if (!garmentAdded)
       return ResponseMessage.internalServerError("Failed to add garment");
 
@@ -28,11 +84,9 @@ export class GarmentsService {
     if (!Types.ObjectId.isValid(id)) {
       return ResponseMessage.badRequest("Invalid garment ID");
     }
-    
-    const updatedGarment = await this.garmentsRepository.updateById(
-      id,
-      garment
-    );
+
+    const updatedGarment = await this.garmentsRepository.updateById(id, garment);
+
     if (!updatedGarment) {
       return ResponseMessage.notFound("Garment not found");
     }
@@ -48,6 +102,7 @@ export class GarmentsService {
     }
 
     const deletedGarment = await this.garmentsRepository.deleteById(id);
+
     if (!deletedGarment) {
       return ResponseMessage.notFound("Garment not found");
     }
@@ -63,6 +118,7 @@ export class GarmentsService {
     }
 
     const garment = await this.garmentsRepository.findById(id);
+
     if (!garment) {
       return ResponseMessage.notFound("Garment not found");
     }
@@ -128,14 +184,19 @@ export class GarmentsService {
     });
   }
 
+  public async genrateQrCodeSerivce(garmentId: Types.ObjectId) {
+    const garment = await this.garmentsRepository.findById(garmentId);
 
-  public async genrateQrCodeSerivce(garmentId: Types.ObjectId){
-    const garment = this.garmentsRepository.findById(garmentId);
-    if(!garment) return ResponseMessage.badRequest("garment not found");
+    if (!garment) return ResponseMessage.badRequest("Garment not found");
 
-    const qrCodeBase64 = await QRCodeService.generateQRCodeBase64(garmentId.toString());
-    if(!qrCodeBase64) return ResponseMessage.internalServerError("failed to genereate qr code");
+    const qrCodeBase64 =
+      await QRCodeService.generateQRCodeBase64(garmentId.toString());
 
-    return ResponseMessage.created("qr code generated", {qrCodeBase64})
+    if (!qrCodeBase64)
+      return ResponseMessage.internalServerError(
+        "Failed to generate QR code"
+      );
+
+    return ResponseMessage.created("QR code generated", { qrCodeBase64 });
   }
 }
