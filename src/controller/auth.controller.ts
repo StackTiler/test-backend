@@ -1,7 +1,6 @@
 /**
  * ============================================================================
  * Authentication Controller (HTTP Layer)
- * ============================================================================
  *
  * WORKFLOW OVERVIEW:
  * Controller handles HTTP requests, validates input, calls service layer,
@@ -58,7 +57,6 @@
  * - Controller converts to HTTP status codes
  * - Client receives standardized error format
  *
- * ============================================================================
  */
 
 import { NextFunction, Request, Response } from "express";
