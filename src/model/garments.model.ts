@@ -38,7 +38,7 @@ import { Garment } from "../interfaces/garment.interface";
 
 const AVAILABILITY = ["in stock", "out of stock", "pre-order"] as const;
 
-export interface IGarmentSchema extends Garment, Document {}
+export interface IGarmentSchema extends Garment, Document { }
 
 export const ProductSchema = new Schema(
   {
@@ -85,6 +85,32 @@ export const ProductSchema = new Schema(
       trim: true,
       lowercase: true,
       maxlength: 120,
+    },
+    color: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 100,
+    },
+    styleCode: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 100,
+    },
+    region: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+      default: "india",
+      maxlength: 100,
+    },
+    collection_name: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 150,
     },
     tags: {
       type: [String],

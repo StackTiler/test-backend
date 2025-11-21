@@ -155,7 +155,7 @@ class KumudMangement {
     );
 
     this.expressApp.use((req: Request, res: Response, next: NextFunction) => {
-      console.log("Request received:", req.headers, req.url);
+      // console.log("Request received:", req.headers, req.url);
       res.setHeader("X-Content-Type-Options", "nosniff");
       res.setHeader("X-Frame-Options", "DENY");
       res.setHeader("X-XSS-Protection", "1; mode=block");

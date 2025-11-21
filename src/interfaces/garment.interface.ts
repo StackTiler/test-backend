@@ -24,6 +24,25 @@
 
 export type Availability = "in stock" | "out of stock" | "pre-order";
 
+// export interface Garment {
+//   name: string;
+//   description: string;
+//   price: number;
+//   size: string;
+//   availability: Availability;
+//   vendor: string;
+//   categories: string;
+//   color: string;
+//   styleCode: string;
+//   region: string;
+//   collection: string;
+//   images: string[];
+//   tags: string[];
+//   createdAt: Date;
+//   updatedAt: Date;
+// }
+
+
 export interface Garment {
   name: string;
   description: string;
@@ -34,6 +53,10 @@ export interface Garment {
   categories: string;
   images: string[];
   tags: string[];
+  color: string;
+  styleCode: string;
+  region: string;
+  collection_name: string;
   createdAt: Date;
   updatedAt: Date;
 }

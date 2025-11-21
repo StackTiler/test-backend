@@ -50,6 +50,10 @@ export const createGarmentSchema = z.object({
       availability: z.enum(AVAILABILITY).optional(),
       vendor: z.string().min(1).max(120).trim().toLowerCase().optional(),
       categories: z.string().min(1).max(120).trim().toLowerCase().optional(),
+      color: z.string().min(1).max(100).trim().optional(),
+      styleCode: z.string().min(1).max(100).trim().optional(),
+      region: z.string().min(1).max(100).trim().toLowerCase().default("india").optional(),
+      collection: z.string().min(1).max(150).trim().optional(),
       tags: z
         .string()
         .optional()
@@ -97,6 +101,10 @@ export const updateGarmentSchema = z.object({
       availability: z.enum(AVAILABILITY).optional(),
       vendor: z.string().min(1).max(120).trim().toLowerCase().optional(),
       categories: z.string().min(1).max(120).trim().toLowerCase().optional(),
+      color: z.string().min(1).max(100).trim().optional(),
+      styleCode: z.string().min(1).max(100).trim().optional(),
+      region: z.string().min(1).max(100).trim().toLowerCase().optional(),
+      collection_name: z.string().min(1).max(150).trim().optional(),
       tags: z
         .string()
         .optional()
