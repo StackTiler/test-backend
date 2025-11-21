@@ -155,6 +155,7 @@ class KumudMangement {
     );
 
     this.expressApp.use((req: Request, res: Response, next: NextFunction) => {
+      console.log("Request received:", req.headers, req.url);
       res.setHeader("X-Content-Type-Options", "nosniff");
       res.setHeader("X-Frame-Options", "DENY");
       res.setHeader("X-XSS-Protection", "1; mode=block");
@@ -268,6 +269,7 @@ class KumudMangement {
       "http://localhost:5173",
       "http://127.0.0.1:5173",
       "http://192.168.0.192:8001",
+      "http://192.168.29.78:8000",
     ];
 
     const extra = process.env.ALLOWED_ORIGINS

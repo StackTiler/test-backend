@@ -6,49 +6,14 @@
     "auditLog": "/home/user/Office/kumud/backend/logs/.11c4b22281ebabaadefc0923704e50511e483e91-audit.json",
     "files": [
         {
-            "date": 1761730709589,
-            "name": "/home/user/Office/kumud/backend/logs/app-2025-10-29.log",
-            "hash": "c04f1d5f786844ac3a61e1d77398acaa1fbd1d161c3492fd86980f9e074c7e19"
+            "date": 1762578595790,
+            "name": "/home/user/Office/kumud/backend/logs/app-2025-11-08.log",
+            "hash": "dd79adf858a6fe9f1ab0b09d1ff8a1946236b8e4852bde20f1a8ce4574442e1f"
         },
         {
-            "date": 1761803202121,
-            "name": "/home/user/Office/kumud/backend/logs/app-2025-10-30.log",
-            "hash": "96efcec0d066f4fa1970d7be01cf406c8638da2cf790f2cc3302fe472d5eabd8"
-        },
-        {
-            "date": 1761886540157,
-            "name": "/home/user/Office/kumud/backend/logs/app-2025-10-31.log",
-            "hash": "88ec4177181b696aa573ce71be440c97f04473bb219f8c16638a350b67f3bd9c"
-        },
-        {
-            "date": 1761981317918,
-            "name": "/home/user/Office/kumud/backend/logs/app-2025-11-01.log",
-            "hash": "f47f4ca120d051d7414ae2f4f4f5beaa7a54ab935df762fff7947990207e0c7a"
-        },
-        {
-            "date": 1762153147606,
-            "name": "/home/user/Office/kumud/backend/logs/app-2025-11-03.log",
-            "hash": "6e858771c0d220600e9593249ad7880f063da809b560848fe5a636163f28c83b"
-        },
-        {
-            "date": 1762229360401,
-            "name": "/home/user/Office/kumud/backend/logs/app-2025-11-04.log",
-            "hash": "b52b53b649f6d52c97c81133714dc878f8657cc6c5879c074c9e5e6938609f91"
-        },
-        {
-            "date": 1762317109143,
-            "name": "/home/user/Office/kumud/backend/logs/app-2025-11-05.log",
-            "hash": "65a7a8960e141cc6a0ab1a2a7827417ad84fcd1bf8c6cbf28e7d781c05a8b3ff"
-        },
-        {
-            "date": 1762399148392,
-            "name": "/home/user/Office/kumud/backend/logs/app-2025-11-06.log",
-            "hash": "53e4617b89ef235e9d3299a323babc9948aeca73f209a325adc9a41f0da33fe6"
-        },
-        {
-            "date": 1762485501535,
-            "name": "/home/user/Office/kumud/backend/logs/app-2025-11-07.log",
-            "hash": "266efce0ef852ec5a9551e88985b3967ce923baef8f657f42aa56d5a40a66871"
+            "date": 1763697454162,
+            "name": "/home/user/Office/kumud/backend/logs/app-2025-11-21.log",
+            "hash": "59b3ae7fbfef9eef1198d59ad12562513f6bfd18270c6bbc788d3bb5c3827a38"
         }
     ],
     "hashType": "sha256"
