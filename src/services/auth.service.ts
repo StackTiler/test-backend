@@ -247,7 +247,7 @@ export class AuthService {
       });
     } catch (error: any) {
       return ResponseMessage.internalServerError(
-        error.message || "Failed to get profile"
+       "Failed to retrieve profile"
       );
     }
   }
